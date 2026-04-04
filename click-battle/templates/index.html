@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Click Battle</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: white;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      margin-top: 80px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+
+    #score {
+      font-size: 3rem;
+      margin: 20px 0;
+      color: #38bdf8;
+    }
+
+    #timer {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #facc15;
+    }
+
+    button {
+      background: #22c55e;
+      color: white;
+      border: none;
+      padding: 18px 40px;
+      font-size: 1.3rem;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      margin: 10px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: #16a34a;
+    }
+
+    #result {
+      font-size: 1.5rem;
+      margin-top: 20px;
+      color: #f472b6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Click Battle</h1>
+    <p>Click as fast as you can in 10 seconds!</p>
+
+    <div id="timer">Time Left: 10</div>
+    <div id="score">0</div>
+
+    <button onclick="startGame()">Start Game</button>
+    <button onclick="increaseScore()" id="clickBtn" disabled>Click Me!</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    let score = 0;
+    let timeLeft = 10;
+    let gameRunning = false;
+    let timer;
+
+    function startGame() {
+      score = 0;
+      timeLeft = 10;
+      gameRunning = true;
+
+      document.getElementById("score").innerText = score;
+      document.getElementById("timer").innerText = "Time Left: " + timeLeft;
+      document.getElementById("result").innerText = "";
+      document.getElementById("clickBtn").disabled = false;
+
+      clearInterval(timer);
+
+      timer = setInterval(() => {
+        timeLeft--;
+        document.getElementById("timer").innerText = "Time Left: " + timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(timer);
+          gameRunning = false;
+          document.getElementById("clickBtn").disabled = true;
+          document.getElementById("result").innerText = "Game Over! Your score is " + score;
+        }
+      }, 1000);
+    }
+
+    function increaseScore() {
+      if (gameRunning) {
+        score++;
+        document.getElementById("score").innerText = score;
+      }
+    }
+  </script>
+</body>
+</html>

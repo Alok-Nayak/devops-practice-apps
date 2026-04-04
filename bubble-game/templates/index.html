@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bubble Burst Challenge</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bubble Burst Challenge 🎯</h1>
+        <p class="subtitle">
+            Click the bubbles before they disappear!
+        </p>
+
+        <div class="top-panel">
+            <div class="stat-card">
+                <span class="label">Score</span>
+                <span id="score">0</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="label">Missed</span>
+                <span id="missed">0</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="label">Spawned</span>
+                <span id="spawned">0</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="label">Time Left</span>
+                <span id="time-left">30</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="label">Accuracy</span>
+                <span id="accuracy">0%</span>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="start-btn" onclick="startGame()">Start Game</button>
+            <button id="restart-btn" onclick="restartGame()" disabled>Restart</button>
+        </div>
+
+        <div id="game-area"></div>
+
+        <div id="result-panel" class="result-panel hidden">
+            <h2>Game Over</h2>
+            <p>Total Spawned: <span id="final-spawned">0</span></p>
+            <p>Total Clicked: <span id="final-clicked">0</span></p>
+            <p>Total Missed: <span id="final-missed">0</span></p>
+            <p>Accuracy: <span id="final-accuracy">0%</span></p>
+        </div>
+
+        <div class="api-panel">
+            <h3>Backend Endpoints</h3>
+            <p><strong>Health:</strong> <a href="/health" target="_blank">/health</a></p>
+            <p><strong>Metrics:</strong> <a href="/metrics" target="_blank">/metrics</a></p>
+        </div>
+    </div>
+
+    <script src="/static/game.js"></script>
+</body>
+</html>
