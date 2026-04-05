@@ -1,9 +1,3 @@
-
----
-
-# 📁 `bubble-burst-game/README.md`
-
-```markdown
 # 🫧 Bubble Burst Game
 
 An interactive browser-based game where bubbles appear randomly and must be clicked before they disappear. The goal is to burst as many bubbles as possible within a time limit.

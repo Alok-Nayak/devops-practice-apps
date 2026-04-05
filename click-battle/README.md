@@ -1,8 +1,3 @@
----
-
-# 📁 `click-battle-game/README.md`
-
-```markdown
 # ⚡ Click Battle Game
 
 A fast-paced browser game where players must click as many times as possible within a limited time. The goal is to achieve the highest click score before time runs out.
