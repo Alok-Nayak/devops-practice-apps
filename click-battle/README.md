@@ -37,4 +37,12 @@ docker build -t click-battle .
 docker run -p 80:80 click-battle
 
 ```
+## 🐳 Docker Hub Image
+
+Pull the image:
+
+```bash
+docker pull kubealok/click-battle:latest
+```
+
 

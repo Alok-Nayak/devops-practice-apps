@@ -35,3 +35,12 @@ docker build -t bubble-burst-game .
 docker run -p 80:80 bubble-burst-game
 
 ```
+
+## 🐳 Docker Hub Image
+
+Pull the pre-built image:
+
+
+```bash
+docker pull kubealok/bubble-game:latest
+```

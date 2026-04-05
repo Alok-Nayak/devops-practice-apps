@@ -105,3 +105,12 @@ docker build -t url-shortener-api .
 
 docker run -p 3000:3000 url-shortener-api
 ```
+---
+
+## 🐳 Docker Hub Image
+
+Pull the pre-built image:
+
+```bash
+docker pull kubealok/url-shortener-api:latest`
+```
