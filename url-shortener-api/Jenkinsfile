@@ -1,0 +1,40 @@
+pipeline{
+    agent any
+
+    stages{
+        stage('checkout'){
+            steps{
+                checkout scm
+            }
+        }
+
+        stage('install dependencies'){
+            steps{
+                sh 'npm run build'
+            }
+        }
+
+        stage('build'){
+            steps{
+                sh 'npm run build'
+            }
+        }
+
+        stage('copy stataic files'){
+            steps{
+                sh 'rm -rf dist/public && cp -r src/public dist/'
+            }
+        }
+
+        stage('restart service'){
+            steps{
+                sh 'sudo systemctl restart url-shortener-api'
+            }
+        }
+        stage('verify service'){
+            steps{
+                sh 'sudo systemctl status url-shortener-api --no-pager'
+            }
+        }
+    }
+}
