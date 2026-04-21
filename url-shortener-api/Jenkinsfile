@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         DEPLOY_PATH = '/home/ubuntu/workdir/devops-practice-apps/url-shortener-api'
+        PATH = "/home/ubuntu/.nvm/versions/node/v24.15.0/bin:${env.PATH}"
     }
 
     stages {
