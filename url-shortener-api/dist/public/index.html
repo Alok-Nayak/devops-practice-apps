@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="hero">
+      <h1>URL Shortener</h1>
+      <p>Create short links and manage them easily.</p>
+    </header>
+
+    <section class="card">
+      <h2>Shorten a URL</h2>
+      <form id="shorten-form">
+        <input
+          type="url"
+          id="url-input"
+          placeholder="Paste a long URL here..."
+          required
+        />
+        <button type="submit">Shorten URL</button>
+      </form>
+
+      <div id="message" class="message hidden"></div>
+
+      <div id="result" class="result hidden">
+        <h3>Short URL Created</h3>
+        <p><strong>Original:</strong> <span id="original-url"></span></p>
+        <p>
+          <strong>Short URL:</strong>
+          <a id="short-url" href="#" target="_blank"></a>
+        </p>
+        <button id="copy-btn" type="button">Copy Short URL</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-header">
+        <h2>Created URLs</h2>
+        <div class="action-buttons">
+          <button id="refresh-btn" type="button">Refresh</button>
+          <button id="clear-all-btn" type="button" class="danger-btn">Clear All</button>
+        </div>
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Short Code</th>
+              <th>Short URL</th>
+              <th>Original URL</th>
+              <th>Clicks</th>
+              <th>Created At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="urls-table-body">
+            <tr>
+              <td colspan="6" class="empty">No URLs created yet.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card endpoints">
+      <h2>Service Endpoints</h2>
+      <ul>
+        <li><a href="/" target="_blank">/</a></li>
+        <li><a href="/health" target="_blank">/health</a></li>
+        <li><a href="/ready" target="_blank">/ready</a></li>
+        <li><a href="/metrics" target="_blank">/metrics</a></li>
+        <li><a href="/api" target="_blank">/api</a></li>
+      </ul>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+  <footer class="footer">
+    <p> 
+      <a href="https://github.com/Alok-Nayak/" target="_blank">GitHub</a> • 
+      <a href="https://www.linkedin.com/in/alok-nayak/" target="_blank">LinkedIn</a> • 
+      <a href="https://aloknayak.hashnode.dev/" target="_blank">Blog</a>
+    </p>
+  </footer>
+
+</body>
+</html>
