@@ -15,8 +15,6 @@ A full-stack URL shortener application with a web interface, REST API, and built
 - Health and readiness endpoints
 - Prometheus metrics integration
 
-
-
 ---
 
 ## ⚙️ Technology Stack
