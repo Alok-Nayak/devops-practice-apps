@@ -30,7 +30,15 @@ pipeline {
             }
         }
 
-        stage('Deploy Artifacts') {
+        stage('Copy Static Files') {
+            steps {
+                dir('url-shortener-api') {
+                    sh 'rm -rf dist/public && cp -r src/public dist/'
+                }
+            }
+        }
+
+        stage('Deploy to App Server') {
             steps {
                 sshagent(credentials: ['app-server-ssh']) {
                     sh '''
@@ -53,7 +61,7 @@ pipeline {
 
         stage('Verify') {
             steps {
-                sh 'curl -I http://$APP_SERVER'
+                sh 'curl -I http://13.232.15.236'
             }
         }
     }
