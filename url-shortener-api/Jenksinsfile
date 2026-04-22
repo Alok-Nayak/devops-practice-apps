@@ -1,0 +1,68 @@
+pipeline {
+    agent any
+
+    environment {
+        APP_SERVER = '13.232.15.236'
+        APP_DIR = '/opt/url-shortener-api'
+        SERVICE_NAME = 'url-shortener-api'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                dir('url-shortener-api') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('url-shortener-api') {
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Copy Static Files') {
+            steps {
+                dir('url-shortener-api') {
+                    sh 'rm -rf dist/public && cp -r src/public dist/'
+                }
+            }
+        }
+
+        stage('Deploy to App Server') {
+            steps {
+                sshagent(credentials: ['app-server-ssh']) {
+                    sh '''
+                        rsync -az --delete \
+                          -e "ssh -o StrictHostKeyChecking=no" \
+                          url-shortener-api/dist/ ubuntu@$APP_SERVER:$APP_DIR/dist/
+
+                        rsync -az \
+                          -e "ssh -o StrictHostKeyChecking=no" \
+                          url-shortener-api/package.json ubuntu@$APP_SERVER:$APP_DIR/
+
+                        ssh -o StrictHostKeyChecking=no ubuntu@$APP_SERVER "
+                          sudo systemctl restart $SERVICE_NAME &&
+                          sudo systemctl status $SERVICE_NAME --no-pager
+                        "
+                    '''
+                }
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                sh 'curl -I http://13.232.15.236'
+            }
+        }
+    }
+
