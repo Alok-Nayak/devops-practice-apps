@@ -2,8 +2,9 @@ pipeline {
     agent any
 
     environment {
-        DEPLOY_PATH = '/home/ubuntu/workdir/devops-practice-apps/url-shortener-api'
-        PATH = "/home/ubuntu/.nvm/versions/node/v24.15.0/bin:${env.PATH}"
+        APP_SERVER = '13.232.15.236'
+        APP_DIR = '/opt/url-shortener-api'
+        SERVICE_NAME = 'url-shortener-api'
     }
 
     stages {
@@ -29,33 +30,30 @@ pipeline {
             }
         }
 
-        stage('Copy Static Files') {
+        stage('Deploy Artifacts') {
             steps {
-                dir('url-shortener-api') {
-                    sh 'rm -rf dist/public && cp -r src/public dist/'
+                sshagent(credentials: ['app-server-ssh']) {
+                    sh '''
+                        rsync -az --delete \
+                          -e "ssh -o StrictHostKeyChecking=no" \
+                          url-shortener-api/dist/ ubuntu@$APP_SERVER:$APP_DIR/dist/
+
+                        rsync -az \
+                          -e "ssh -o StrictHostKeyChecking=no" \
+                          url-shortener-api/package.json ubuntu@$APP_SERVER:$APP_DIR/
+
+                        ssh -o StrictHostKeyChecking=no ubuntu@$APP_SERVER "
+                          sudo systemctl restart $SERVICE_NAME &&
+                          sudo systemctl status $SERVICE_NAME --no-pager
+                        "
+                    '''
                 }
             }
         }
 
-        stage('Deploy Files') {
+        stage('Verify') {
             steps {
-                sh '''
-                    rsync -av --delete url-shortener-api/dist/ ${DEPLOY_PATH}/dist/
-                    rsync -av url-shortener-api/package.json ${DEPLOY_PATH}/
-                    rsync -av url-shortener-api/src/public/ ${DEPLOY_PATH}/src/public/
-                '''
-            }
-        }
-
-        stage('Restart Service') {
-            steps {
-                sh 'sudo systemctl restart url-shortener-api'
-            }
-        }
-
-        stage('Verify Service') {
-            steps {
-                sh 'sudo systemctl status url-shortener-api --no-pager'
+                sh 'curl -I http://$APP_SERVER'
             }
         }
     }
